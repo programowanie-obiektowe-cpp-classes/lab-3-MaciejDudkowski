@@ -2,7 +2,7 @@
 
 #include "Stocznia.hpp"
 
-unsigned int transportujFlota(unsigned int towar)
+int transportujFlota(int towar)
 {
     class Stocznia
     {
