@@ -5,38 +5,27 @@
 #include <cstdlib>
 #include <ctime>
 
-int transportujFlota(int towar)
+unsigned int transportujFlota(unsigned int towar)
 {
-    class Stocznia
-    {
-    public:
-        Stocznia() = default;
+    if (towar == 0)
+        return 0;
 
-        Statek* operator()() {}
-    };
+    std::srand(static_cast< unsigned int >(std::time(nullptr)));
 
-    int transportujFlota(int towar);
-    {
-        if (towar == 0)
-            return 0;
+    Stocznia     stocznia{};
+    unsigned int przetransportowano = 0;
+    unsigned int liczbaZaglowcow    = 0;
 
-        Stocznia stocznia{};
-        int      przetransportowane = 0;
-        int      liczbaZaglowcow    = 0;
+    while (przetransportowano < towar) {
+        Statek*      s       = stocznia();
+        unsigned int ladunek = s->transportuj();
+        przetransportowano += ladunek;
 
-        while (przetransportowane < towar) {
-            Statek* statek = stocznia();
-
-            przetransportowane += statek->transportuj();
-
-            if (dynamic_cast< Zaglowiec* >(statek) != nullptr) {
-                ++liczbaZaglowcow;
-            }
-
-            delete statek;
+        if (dynamic_cast< Zaglowiec* >(s) != nullptr) {
+            ++liczbaZaglowcow;
         }
 
-        return liczbaZaglowcow;
+        delete s; 
     }
-    return 0;
-}
+    return liczbaZaglowcow;
+};
